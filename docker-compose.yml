@@ -1,0 +1,60 @@
+version: "3"
+
+services:
+  users:
+    container_name: user_service
+    build:
+      context: .
+      dockerfile: ./apps/user_service/Dockerfile
+    environment:
+      - PORT=$USER_SERVICE_PORT
+      - DB_PORT=$DB_PORT
+      - DB_USER=$DB_USER
+      - DB_PASSWORD=$DB_PASSWORD
+      - DB_NAME=$DB_NAME
+      - DB_HOST=$DB_HOST
+    restart: always
+    ports:
+      - $USER_SERVICE_PORT:$USER_SERVICE_PORT
+    networks:
+      - app_network
+    depends_on:
+      - db
+  cocktails:
+    container_name: cocktail_service
+    build:
+      context: .
+      dockerfile: ./apps/cocktail_service/Dockerfile
+    environment:
+      - PORT=$COCTAILS_SERVICE_PORT
+      - DB_PORT=$DB_PORT
+      - DB_USER=$DB_USER
+      - DB_PASSWORD=$DB_PASSWORD
+      - DB_NAME=$DB_NAME
+      - DB_HOST=$DB_HOST
+    restart: always
+    ports:
+      - $COCTAILS_SERVICE_PORT:$COCTAILS_SERVICE_PORT
+    networks:
+      - app_network
+    depends_on:
+      - db
+  db:
+    image: postgres:15.3-alpine3.18
+    container_name: pg-docker
+    environment:
+      - POSTGRES_USER=$DB_USER
+      - POSTGRES_PASSWORD=$DB_PASSWORD
+      - POSTGRES_DB=$DB_NAME
+    volumes:
+      - ./chore/pg-data:/var/lib/postgresql/data
+    ports:
+      - "$DB_PORT:5432"
+    networks:
+      - app_network
+
+# Define a network, which allows containers to communicate
+# with each other, by using their container name as a hostname
+networks:
+  app_network:
+    external: true
