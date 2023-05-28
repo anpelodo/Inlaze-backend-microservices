@@ -1,4 +1,4 @@
-import { Ingredients } from "./Ingredients";
+import { Ingredient } from "./Ingredient";
 
 interface CocktailProps {
   id: number;
@@ -8,7 +8,7 @@ interface CocktailProps {
   is_deleted: boolean;
   created_at: Date;
   updated_at: Date;
-  ingredients: Ingredients[];
+  ingredients: Ingredient[];
 }
 
 export class Cocktail {
@@ -19,7 +19,7 @@ export class Cocktail {
   is_deleted: boolean;
   created_at: Date;
   updated_at: Date;
-  ingredients: Ingredients[];
+  ingredients: Ingredient[];
 
   constructor({
     id,

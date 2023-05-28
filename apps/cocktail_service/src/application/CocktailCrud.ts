@@ -8,8 +8,8 @@ import {
   CocktailRepository,
   CocktailSort,
 } from "../domain/CocktailRepository";
-import { IngredientRepository } from "../domain/IngredientRepo";
-import { Ingredient, IngredientFindableDTO } from "../domain/Ingredients";
+import { IngredientRepository } from "../domain/IngredientRepository";
+import { Ingredient, IngredientFindableDTO } from "../domain/Ingredient";
 
 export class CocktailCrud {
   constructor(
@@ -37,15 +37,11 @@ export class CocktailCrud {
     });
   }
 
-  async list({
-    sort = CocktailSort.DESC,
-    orderBy = CocktailOrderBy.CREATED_AT,
-    ingredients,
-  }: {
-    sort?: CocktailSort;
-    orderBy?: CocktailOrderBy;
-    ingredients?: { id: number }[];
-  }): Promise<Cocktail[]> {
+  async list(
+    sort: CocktailSort = CocktailSort.DESC,
+    orderBy: CocktailOrderBy = CocktailOrderBy.CREATED_AT,
+    ingredients?: { id: number }[]
+  ): Promise<Cocktail[]> {
     return await this.cocktailRepo.getList(sort, orderBy, ingredients);
   }
 
