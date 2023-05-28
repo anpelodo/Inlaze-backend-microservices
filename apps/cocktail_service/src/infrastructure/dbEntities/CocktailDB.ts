@@ -28,10 +28,12 @@ export class CocktailDB {
   @Column({ default: new Date() })
   created_at: Date;
 
-  @Column({ nullable: true })
+  @Column({ default: new Date() })
   updated_at: Date;
 
-  @ManyToMany(() => IngredientDB, (ingredient) => ingredient.cocktails)
+  @ManyToMany(() => IngredientDB, (ingredient) => ingredient.cocktails, {
+    cascade: true,
+  })
   @JoinTable()
   ingredients: IngredientDB[];
 }
