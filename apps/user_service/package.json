@@ -39,6 +39,7 @@
     "jest-presets": "*",
     "nodemon": "^2.0.15",
     "supertest": "^6.1.3",
+    "ts-node": "^10.9.1",
     "tsconfig": "*",
     "typescript": "^4.5.3"
   }
