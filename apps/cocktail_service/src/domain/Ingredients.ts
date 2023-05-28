@@ -18,3 +18,6 @@ export class Ingredient {
     this.updated_at = updated_at;
   }
 }
+
+export type IngredientFindableDTO = Pick<Ingredient, "id"> &
+  Partial<Omit<Ingredient, "id">>;
