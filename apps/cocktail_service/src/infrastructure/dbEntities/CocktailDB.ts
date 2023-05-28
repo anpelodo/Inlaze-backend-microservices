@@ -1,4 +1,12 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+
+import { IngredientDB } from "./IngredientDB";
 
 @Entity({ name: "cocktails" })
 export class CocktailDB {
@@ -22,4 +30,8 @@ export class CocktailDB {
 
   @Column({ nullable: true })
   updated_at: Date;
+
+  @ManyToMany(() => IngredientDB, (ingredient) => ingredient.cocktails)
+  @JoinTable()
+  ingredients: IngredientDB[];
 }
