@@ -20,7 +20,7 @@ export class CocktailDB {
   instructions: string;
 
   @Column({ name: "additional_notes" })
-  notes: string;
+  additionalNotes: string;
 
   @Column({ default: false })
   is_deleted: boolean;
