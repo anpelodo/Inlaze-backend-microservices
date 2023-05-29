@@ -9,6 +9,7 @@ export interface CocktailRepository {
   ): Promise<Cocktail[]>;
   update(id: number, cocktail: CocktailUpdateDTO): Promise<Cocktail>;
   logicDelete(id: number): Promise<Cocktail>;
+  findById(id: number): Promise<Cocktail>;
 }
 
 export const enum CocktailSort {

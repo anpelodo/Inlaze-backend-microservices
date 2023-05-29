@@ -20,9 +20,10 @@ export class TypeORMCocktailRepo implements CocktailRepository {
       ...cocktail,
     });
 
-    const newCocktail = await this.dbCocktail.save(dbCocktail);
+    const { id } = await this.dbCocktail.save(dbCocktail);
+    const newCocktail = await this.findById(id);
 
-    return new Cocktail(newCocktail);
+    return newCocktail;
   }
 
   async getList(
@@ -32,6 +33,9 @@ export class TypeORMCocktailRepo implements CocktailRepository {
     const list = await this.dbCocktail.find({
       where: {
         is_deleted: false,
+      },
+      relations: {
+        ingredients: true,
       },
     });
 
@@ -44,9 +48,10 @@ export class TypeORMCocktailRepo implements CocktailRepository {
   ): Promise<Cocktail> {
     const dbCocktail = this.dbCocktail.create({ id, ...cocktail });
 
-    const updatedCocktail = await this.dbCocktail.save(dbCocktail);
+    await this.dbCocktail.save(dbCocktail);
+    const updatedCocktail = await this.findById(id);
 
-    return new Cocktail(updatedCocktail);
+    return updatedCocktail;
   }
 
   async logicDelete(id: number): Promise<Cocktail> {
@@ -61,6 +66,20 @@ export class TypeORMCocktailRepo implements CocktailRepository {
 
     const deletedCocktail = await this.dbCocktail.save(cocktailToDelete);
 
-    return new Cocktail(deletedCocktail);
+    return deletedCocktail;
+  }
+
+  async findById(id: number): Promise<Cocktail> {
+    const result = await this.dbCocktail.findOneOrFail({
+      where: {
+        id,
+        is_deleted: false,
+      },
+      relations: {
+        ingredients: true,
+      },
+    });
+
+    return new Cocktail(result);
   }
 }
