@@ -8,6 +8,12 @@ import {
 } from "../domain/CocktailRepository";
 import { CocktailDB } from "./dbEntities";
 
+const ORDERBY_MAP = {
+  CREATED_AT: "created_at",
+  NAME: "name",
+  INGREDIENTS_COUNT: "",
+} as const;
+
 export class TypeORMCocktailRepo implements CocktailRepository {
   private dbCocktail: Repository<CocktailDB>;
 
@@ -30,10 +36,15 @@ export class TypeORMCocktailRepo implements CocktailRepository {
     sort: CocktailSort = CocktailSort.DESC,
     orderBy: CocktailOrderBy = CocktailOrderBy.CREATED_AT
   ): Promise<Cocktail[]> {
+    const order: Record<string, string> = {};
+
+    order[ORDERBY_MAP[orderBy]] = sort;
+
     const list = await this.dbCocktail.find({
       where: {
         is_deleted: false,
       },
+      order,
       relations: {
         ingredients: true,
       },

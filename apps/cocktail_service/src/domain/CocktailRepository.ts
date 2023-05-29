@@ -20,5 +20,5 @@ export const enum CocktailSort {
 export const enum CocktailOrderBy {
   CREATED_AT = "CREATED_AT",
   NAME = "NAME",
-  INGREDIENTS_COUNT = "INGREDIENTS_COUNT ",
+  INGREDIENTS_COUNT = "INGREDIENTS_COUNT",
 }

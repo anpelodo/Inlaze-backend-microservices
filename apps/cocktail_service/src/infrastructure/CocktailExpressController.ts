@@ -1,13 +1,19 @@
 import { Request, Response } from "express";
 
+import { CocktailOrderBy, CocktailSort } from "../domain/CocktailRepository";
 import { CocktailControllerRestAdapter } from "./CocktailControllerRestAdapter";
 
 export class CocktailExpressController {
   constructor(private readonly cocktailCrud: CocktailControllerRestAdapter) {}
 
   async list(req: Request, res: Response) {
+    const { sort, order_by } = req.query;
+
     try {
-      const list = await this.cocktailCrud.list();
+      const list = await this.cocktailCrud.list(
+        sort as CocktailSort | undefined,
+        order_by as CocktailOrderBy | undefined
+      );
 
       return res.status(200).json(list);
     } catch (err) {
