@@ -50,3 +50,5 @@ export type UserCreateDTO = Pick<
 >;
 
 export type UserUpdateDTO = Partial<UserCreateDTO>;
+
+export type UserLoginDTO = Pick<UserProps, "email" | "password">;
