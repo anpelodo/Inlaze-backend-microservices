@@ -35,7 +35,7 @@ export class CocktailExpressController {
   }
 
   async update(req: Request, res: Response) {
-    const id = Number(req.query.id);
+    const id = Number(req.params.id);
     const { name, instructions, additional_notes, ingredients } = req.body;
 
     try {
@@ -54,7 +54,7 @@ export class CocktailExpressController {
   }
 
   async delete(req: Request, res: Response) {
-    const id = Number(req.query.id);
+    const id = Number(req.params.id);
 
     try {
       const deletedCocktail = await this.cocktailCrud.delete(id);
