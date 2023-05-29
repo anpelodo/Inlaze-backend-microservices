@@ -21,7 +21,7 @@ export class TypeORMUserRepo implements UserRepository {
   }
 
   async findById(id: number): Promise<User> {
-    const user = await this.dbUser.findOneBy({ id });
+    const user = await this.dbUser.findOneBy({ id, is_deleted: false });
 
     if (!user) {
       //TODO Create a custom Error
@@ -32,7 +32,7 @@ export class TypeORMUserRepo implements UserRepository {
   }
 
   async findByEmail(email: string): Promise<User> {
-    const user = await this.dbUser.findOneBy({ email });
+    const user = await this.dbUser.findOneBy({ email, is_deleted: false });
 
     if (!user) {
       //TODO Create a custom Error
@@ -43,16 +43,17 @@ export class TypeORMUserRepo implements UserRepository {
   }
 
   async emailExist(email: string): Promise<boolean> {
-    return await this.dbUser.exist({ where: { email } });
+    return await this.dbUser.exist({ where: { email, is_deleted: false } });
   }
 
   async idExist(id: number): Promise<boolean> {
-    return this.dbUser.exist({ where: { id } });
+    return this.dbUser.exist({ where: { id, is_deleted: false } });
   }
 
   async update(id: number, user: Partial<UserCreateDTO>): Promise<User> {
     const userToUpdate = this.dbUser.create({ id, ...user });
 
+    userToUpdate.updated_at = new Date();
     await this.dbUser.save(userToUpdate);
     const updatedUser = await this.findById(id);
 
@@ -62,8 +63,11 @@ export class TypeORMUserRepo implements UserRepository {
   async delete(user: User): Promise<User> {
     const userToDelete = this.dbUser.create(user);
 
-    await this.dbUser.delete(userToDelete);
+    userToDelete.is_deleted = true;
+    userToDelete.updated_at = new Date();
 
-    return user;
+    await this.dbUser.save(userToDelete);
+
+    return new User(userToDelete);
   }
 }
