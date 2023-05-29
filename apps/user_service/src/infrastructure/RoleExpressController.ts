@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { logErr } from "logger";
 
 import { RoleCrud } from "../application/RoleCrud";
+import { UserAlreadyExist } from "../domain/UserAlreadyExist";
 
 export class RoleExpressController {
   constructor(private readonly roleCrud: RoleCrud) {}
@@ -14,6 +15,11 @@ export class RoleExpressController {
 
       return res.status(201).json(newRole);
     } catch (err) {
+      if (err instanceof UserAlreadyExist) {
+        console.log("ya existe");
+        return res.status(400).json({ message: "User Already Exist" });
+      }
+
       logErr(err);
       return res.sendStatus(500);
     }
