@@ -39,8 +39,6 @@ export class TypeORMRoleRepo implements RoleRepository {
   async update(id: number, role: Partial<RoleCreateDTO>): Promise<Role> {
     const roleToUpdate = this.dbRole.create({ id, ...role });
 
-    await this.findById(id); //Throw error if not exist
-
     await this.dbRole.save(roleToUpdate);
     const updatedRole = await this.findById(id);
 
@@ -48,12 +46,14 @@ export class TypeORMRoleRepo implements RoleRepository {
   }
 
   async delete(role: Role): Promise<Role> {
-    await this.findById(role.id); //Throw error if not exist
-
     const roleToDelete = this.dbRole.create(role);
 
     await this.dbRole.delete(roleToDelete);
 
     return role;
+  }
+
+  async idExist(id: number): Promise<boolean> {
+    return this.dbRole.exist({ where: { id } });
   }
 }

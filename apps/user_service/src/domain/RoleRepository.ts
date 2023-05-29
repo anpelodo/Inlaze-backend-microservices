@@ -6,4 +6,5 @@ export interface RoleRepository {
   findById(id: number): Promise<Role>;
   update(id: number, role: RoleUpdateDTO): Promise<Role>;
   delete(role: Role): Promise<Role>;
+  idExist(id: number): Promise<boolean>;
 }
