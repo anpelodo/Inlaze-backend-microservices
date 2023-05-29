@@ -1,14 +1,8 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 import { UserDB } from "./UserDB";
 
-@Entity({ name: "users" })
+@Entity({ name: "roles" })
 export class RoleDB {
   @PrimaryGeneratedColumn()
   id: number;
@@ -19,10 +13,9 @@ export class RoleDB {
   @Column({ default: new Date() })
   created_at: Date;
 
-  @Column({ nullable: true })
+  @Column({ default: new Date() })
   updated_at: Date;
 
-  @OneToOne(() => UserDB, (user: UserDB) => user.role)
-  @JoinColumn()
+  @OneToMany(() => UserDB, (user: UserDB) => user.role)
   user: UserDB;
 }

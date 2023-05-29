@@ -1,4 +1,4 @@
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 import { RoleDB } from "./RoleDB";
 
@@ -25,9 +25,9 @@ export class UserDB {
   @Column({ default: new Date() })
   created_at: Date;
 
-  @Column({ nullable: true })
+  @Column({ default: new Date() })
   updated_at: Date;
 
-  @OneToOne(() => RoleDB, (role: RoleDB) => role.user)
+  @ManyToOne(() => RoleDB, (role: RoleDB) => role.user)
   role: RoleDB;
 }
