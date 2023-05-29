@@ -12,8 +12,6 @@ import { apiRouter } from "./infrastructure/routes";
 export const createServer = async () => {
   const app = express();
 
-  console.log(config);
-
   await AppDataSource.initialize();
   app
     .set("port", config.port)

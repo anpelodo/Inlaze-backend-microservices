@@ -1,5 +1,3 @@
-console.log(process.env.DB_PORT, typeof process.env.DB_PORT);
-
 export const config = {
   port: process.env.PORT || 3001,
   dbPort: Number(process.env.DB_PORT) || 5432,
