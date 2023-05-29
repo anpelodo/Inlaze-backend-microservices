@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 
-import { CocktailCrud } from "../application/CocktailCrud";
+import { CocktailControllerRestAdapter } from "./CocktailControllerRestAdapter";
 
 export class CocktailExpressController {
-  constructor(private readonly cocktailCrud: CocktailCrud) {}
+  constructor(private readonly cocktailCrud: CocktailControllerRestAdapter) {}
 
   async list(req: Request, res: Response) {
     try {
