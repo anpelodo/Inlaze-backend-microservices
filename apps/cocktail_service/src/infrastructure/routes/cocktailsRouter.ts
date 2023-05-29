@@ -1,20 +1,31 @@
-import express, { Request, Response } from "express";
+import express from "express";
+
+import { cocktailConroller } from "../dependencies";
 
 const cocktailsRouter = express.Router();
 
-// TODO delete, only for developing
-const tempController = (req: Request, res: Response) => {
-  const { params, query, body } = req;
+// list: Query by name, ingredient, or ingredients quantity
+cocktailsRouter.get(
+  "/cocktails",
+  cocktailConroller.list.bind(cocktailConroller)
+);
 
-  return res.status(200).json({
-    query,
-    params,
-    body,
-  });
-};
+// data from body
+cocktailsRouter.post(
+  "/cocktails",
+  cocktailConroller.create.bind(cocktailConroller)
+);
 
-cocktailsRouter.get("/cocktails", tempController); // list: Query by name, ingredient, or ingredients quantity
-cocktailsRouter.post("/cocktails", tempController); // data from body
-cocktailsRouter.patch("/cocktails/:id", tempController); // id from query, data from body
+// id from query, data from body
+cocktailsRouter.patch(
+  "/cocktails/:id",
+  cocktailConroller.update.bind(cocktailConroller)
+);
+
+// id from query
+cocktailsRouter.delete(
+  "/cocktails/:id",
+  cocktailConroller.delete.bind(cocktailConroller)
+);
 
 export { cocktailsRouter };
