@@ -10,11 +10,9 @@ import { CocktailDB } from "./dbEntities";
 
 export class TypeORMCocktailRepo implements CocktailRepository {
   private dbCocktail: Repository<CocktailDB>;
-  // private dbIngredient: Repository<IngredientDB>;
 
   constructor(db: DataSource) {
     this.dbCocktail = db.getRepository(CocktailDB);
-    // this.dbIngredient = db.getRepository(IngredientDB);
   }
 
   async create(cocktail: CocktailCreateDTO): Promise<Cocktail> {

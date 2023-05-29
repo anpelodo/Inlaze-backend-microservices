@@ -8,8 +8,8 @@ import {
   CocktailRepository,
   CocktailSort,
 } from "../domain/CocktailRepository";
-import { IngredientRepository } from "../domain/IngredientRepository";
 import { Ingredient, IngredientFindableDTO } from "../domain/Ingredient";
+import { IngredientRepository } from "../domain/IngredientRepository";
 
 export class CocktailCrud {
   constructor(

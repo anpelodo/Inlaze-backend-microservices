@@ -40,10 +40,6 @@ export class Cocktail {
     this.updated_at = updated_at;
     this.ingredients = ingredients;
   }
-
-  markAsDeleted() {
-    this.is_deleted = true;
-  }
 }
 
 export type CocktailCreateDTO = Pick<
