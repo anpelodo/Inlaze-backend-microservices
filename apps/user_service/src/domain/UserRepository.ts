@@ -5,6 +5,7 @@ export interface UserRepository {
   findById(id: number): Promise<User>;
   findByEmail(email: string): Promise<User>;
   emailExist(email: string): Promise<boolean>;
+  idExist(id: number): Promise<boolean>;
   update(id: number, user: UserUpdateDTO): Promise<User>;
   delete(user: User): Promise<User>;
 }
