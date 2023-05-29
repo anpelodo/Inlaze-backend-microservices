@@ -1,5 +1,6 @@
 import { CryptoService, Token } from "../domain/CryptoService";
 import { User, UserCreateDTO, UserLoginDTO } from "../domain/User";
+import { UserAlreadyExist } from "../domain/UserAlreadyExist";
 import { UserRepository } from "../domain/UserRepository";
 
 export class UserAuth {
@@ -32,8 +33,7 @@ export class UserAuth {
     phone,
   }: UserCreateDTO): Promise<AuthData> {
     if (await this.userRepo.emailExist(email)) {
-      //TODO Create a custom Error
-      throw Error("Email Exist");
+      throw new UserAlreadyExist("User Auth: signUp");
     }
 
     const hashedPswd = this.crypto.hashPassword(password);

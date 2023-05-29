@@ -1,3 +1,4 @@
+import { NotFoundError } from "../domain/NotFoundError";
 import { Role, RoleCreateDTO, RoleUpdateDTO } from "../domain/Role";
 import { RoleRepository } from "../domain/RoleRepository";
 
@@ -18,8 +19,7 @@ export class RoleCrud {
 
   async update(id: number, partial: RoleUpdateDTO): Promise<Role> {
     if (!(await this.roleRepo.idExist(id))) {
-      //TODO Create a custom Error
-      throw new Error("no existe");
+      throw new NotFoundError("Role Crud: update");
     }
 
     const roleUpdated = await this.roleRepo.update(id, partial);

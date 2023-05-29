@@ -1,3 +1,4 @@
+import { NotFoundError } from "../domain/NotFoundError";
 import { User, UserUpdateDTO } from "../domain/User";
 import { UserRepository } from "../domain/UserRepository";
 
@@ -6,8 +7,7 @@ export class UserCrud {
 
   async update(id: number, partial: UserUpdateDTO): Promise<User> {
     if (!(await this.userRepo.idExist(id))) {
-      //TODO Create a custom Error
-      throw new Error("no existe");
+      throw new NotFoundError("User Crud: update");
     }
 
     const userUpdated = await this.userRepo.update(id, partial);

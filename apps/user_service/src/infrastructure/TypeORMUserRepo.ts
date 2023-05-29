@@ -1,5 +1,6 @@
 import { DataSource, Repository } from "typeorm";
 
+import { NotFoundError } from "../domain/NotFoundError";
 import { User, UserCreateDTO } from "../domain/User";
 import { UserRepository } from "../domain/UserRepository";
 import { UserDB } from "./dbEntities";
@@ -24,8 +25,7 @@ export class TypeORMUserRepo implements UserRepository {
     const user = await this.dbUser.findOneBy({ id, is_deleted: false });
 
     if (!user) {
-      //TODO Create a custom Error
-      throw new Error("no existe");
+      throw new NotFoundError("User Repo: findById");
     }
 
     return new User(user);
@@ -35,8 +35,7 @@ export class TypeORMUserRepo implements UserRepository {
     const user = await this.dbUser.findOneBy({ email, is_deleted: false });
 
     if (!user) {
-      //TODO Create a custom Error
-      throw new Error("no existe");
+      throw new NotFoundError("User Repo: findByEmail");
     }
 
     return new User(user);

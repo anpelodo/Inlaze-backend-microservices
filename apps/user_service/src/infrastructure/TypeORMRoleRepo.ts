@@ -1,5 +1,6 @@
 import { DataSource, Repository } from "typeorm";
 
+import { NotFoundError } from "../domain/NotFoundError";
 import { Role, RoleCreateDTO } from "../domain/Role";
 import { RoleRepository } from "../domain/RoleRepository";
 import { RoleDB } from "./dbEntities";
@@ -29,8 +30,7 @@ export class TypeORMRoleRepo implements RoleRepository {
     const role = await this.dbRole.findOneBy({ id });
 
     if (!role) {
-      //TODO Create a custom Error
-      throw new Error("No existe");
+      throw new NotFoundError("Role Repo: findById");
     }
 
     return new Role(role);
