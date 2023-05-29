@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { logErr } from "logger";
 
 import { CocktailOrderBy, CocktailSort } from "../domain/CocktailRepository";
 import { CocktailControllerRestAdapter } from "./CocktailControllerRestAdapter";
@@ -17,7 +18,7 @@ export class CocktailExpressController {
 
       return res.status(200).json(list);
     } catch (err) {
-      console.error(err);
+      logErr(err);
       return res.sendStatus(500);
     }
   }
@@ -35,7 +36,7 @@ export class CocktailExpressController {
 
       return res.status(201).json(newCocktail);
     } catch (err) {
-      console.error(err);
+      logErr(err);
       return res.sendStatus(500);
     }
   }
@@ -54,7 +55,7 @@ export class CocktailExpressController {
 
       return res.status(200).json(updatedCocktail);
     } catch (err) {
-      console.error(err);
+      logErr(err);
       return res.sendStatus(500);
     }
   }
@@ -67,7 +68,7 @@ export class CocktailExpressController {
 
       return res.status(200).json(deletedCocktail);
     } catch (err) {
-      console.error(err);
+      logErr(err);
       return res.sendStatus(500);
     }
   }
